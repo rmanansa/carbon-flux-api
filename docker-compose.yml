@@ -1,0 +1,36 @@
+version: '3'
+services:
+  db:
+    container_name: weather-postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: weather
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: psql123
+    #volumes:
+    #  - data-volume:/var/lib/postgressql/data
+    networks:
+      - weather-network
+
+  web:
+    container_name: weather-api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: weather-api-image
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - weather-network
+#volumes:
+#  data-volume:
+networks:
+  weather-network:
