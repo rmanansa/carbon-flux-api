@@ -57,16 +57,16 @@ public class ThirdPartyApiService {
         log.info("{\"method\": \"service.getWeather\"}");
         log.info("partnerURL = {}", partnerURL);
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(urlWithParams.toString());
-        final String uri = uriBuilder.buildAndExpand(urlParams).toUri().toString();
-        log.info("uri = >>>{}<<<", uri);
-
-        //https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,daily&appid={API key}
         //URL from config = "https://api.openweathermap.org/data/2.5";
         // action = "onecall";
         // lat = 33.441792 //Double
         // lon = 94.837689 / Double
         // exclude  determines which data to take out. get this from the config
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString(urlWithParams.toString());
+        final String uri = uriBuilder.buildAndExpand(urlParams).toUri().toString();
+        log.info("{\"uri\": \"{}\"}", uri);
+
 
         try {
             responseEntity = restTemplate.getForEntity(uri, String.class);
